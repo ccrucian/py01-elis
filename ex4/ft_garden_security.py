@@ -19,8 +19,8 @@ class Plant:
 
     def set_height(self, new_height):
         if new_height < 0:
-            print(f"""{self.name}: Error, height can't be negative
-            Height update rejected""")
+            print(f"{self.name}: Error, height can't be negative")
+            print("Height update rejected")
         else:
             self._height = new_height
             print(f"Height updated: {self._height}cm")
