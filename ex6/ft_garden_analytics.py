@@ -1,7 +1,7 @@
 class Plant:
 
     class Stats:
-        
+
         def __init__(self):
             self._grow = 0
             self._age = 0
@@ -17,11 +17,16 @@ class Plant:
         self._days = days
         self._stats = self.Stats()
 
+    def title_stats(self):
+        print(f"[statistics for {self.name}]")
+
+    def show_stats(self):
+        self.title_stats()
+        self._stats.display_stats()
+
     def show(self):
         print(f"{self.name}: {self._height}cm, {self._days} days old")
         self._stats._show += 1
-        print(f"[statistics for {self.name}]")
-        self._stats.display_stats()
 
     def age(self, age):
         self._days = self._days + age
@@ -54,12 +59,16 @@ class Plant:
 
     @staticmethod
     def older_than_a_year(_days):
-        return _days > 365
+        if _days > 365:
+            x = "True"
+        else:
+            x = "False"
+        print(f"Is {_days} more than a year? -> {x}")
 
     @classmethod
     def create_anonymous(cls):
-        return cls("Unknown plan", 0.0, 0)
-       
+        return cls("Unknown plant", 0.0, 0)
+
 
 class Flower(Plant):
 
@@ -77,15 +86,15 @@ class Flower(Plant):
             print(f" {self.name} has not bloomed yet")
 
     def bloom(self):
-
         print(f"[asking the {self.name} to bloom]")
         self.bloomed = True
 
+
 class Seed(Flower):
 
-    def __init__(self, name, height, days, color, seeds):
+    def __init__(self, name, height, days, color):
         super().__init__(name, height, days, color)
-        self.seeds = seeds
+        self.seeds = 0
 
     def check_bloom(self):
         if self.bloomed:
@@ -93,8 +102,11 @@ class Seed(Flower):
         else:
             pass
 
+    def seed_born(self):
+        print(f"[make {self.name} grow, age and bloom]")
+
     def bloom(self):
-        super().bloom()
+        self.bloomed = True
 
     def seeds_stat(self):
         print(f" Seeds: {self.seeds}")
@@ -108,12 +120,18 @@ class Tree(Plant):
     def __init__(self, name, height, days, diameter):
         super().__init__(name, height, days)
         self.diameter = diameter
+        self.shade = 0
+
+    def show_stats(self):
+        super().show_stats()
+        print(f"{self.shade} shade")
 
     def show(self):
         super().show()
         print(f" Trunk diameter: {self.diameter}cm")
 
     def produce_shade(self):
+        self.shade += 1
         print(f"[asking the {self.name} to produce shade]")
         print(f"Tree {self.name} now produces a shade of "
               f"{self._height}cm long and {self.diameter}cm wide.")
@@ -123,27 +141,42 @@ def main():
 
     plant1 = Flower("Rose", 15.0, 10, "red")
     plant2 = Tree("Oak", 200.0, 365, 5.0)
-    seed = Seed("Rose", 15.0, 10, "red", 0)
+    seed = Seed("Sunflower", 80.0, 45, "yellow")
     print("=== Garden statistics ===")
     print("=== Check year-old")
+    Plant.older_than_a_year(30)
+    Plant.older_than_a_year(400)
+    print("")
     print("=== Flower")
     plant1.show()
+    plant1.show_stats()
     plant1.bloom()
     plant1.show()
+    plant1.show_stats()
     print("")
     print("=== Tree")
     plant2.show()
+    plant2.show_stats()
     plant2.produce_shade()
-    #plant2.display_stats()
+    plant2.show_stats()
     print("")
     print("=== Seed")
     seed.show()
+    seed.seeds_stat()
+    seed.seed_born()
+    seed.age(20)
+    seed.grow(30.0)
     seed.bloom()
+    seed.show()
     seed.check_bloom()
     seed.seeds_stat()
-
+    seed.show_stats()
+    print("")
+    print("=== Anonymous")
+    unknown = Plant.create_anonymous()
+    unknown.show()
+    unknown.show_stats()
 
 
 if __name__ == "__main__":
-
     main()
