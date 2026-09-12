@@ -1,23 +1,23 @@
 class Plant:
 
-    def __init__(self, name: str, height: float, days: int):
+    def __init__(self, name: str, height: float, days: int) -> None:
         self.name = name
         self._height = height
         self._days = days
 
-    def show(self):
+    def show(self) -> None:
         print(f"{self.name}: {self._height}cm, {self._days} days old")
 
-    def age(self):
+    def age(self) -> None:
         self._days = self._days + 1
 
-    def grow(self, lenght):
+    def grow(self, lenght: float) -> None:
         self._height = round(self._height + lenght, 1)
 
-    def get_height(self):
+    def get_height(self) -> float:
         return self._height
 
-    def set_height(self, new_height):
+    def set_height(self, new_height: float) -> None:
         if new_height < 0:
             print(f"{self.name}: Error, height can't be negative")
             print("Height update rejected")
@@ -25,10 +25,10 @@ class Plant:
             self._height = new_height
             print(f"Height updated: {self._height}cm")
 
-    def get_age(self):
+    def get_age(self) -> int:
         return self._days
 
-    def set_age(self, new_days):
+    def set_age(self, new_days: int) -> None:
         if new_days >= 0:
             self._days = new_days
             print(f"Age updated: {self._days} days")
@@ -38,12 +38,12 @@ class Plant:
 
 class Flower(Plant):
 
-    def __init__(self, name, height, days, color):
+    def __init__(self, name: str, height: float, days: int, color: str):
         super().__init__(name, height, days)
         self.color = color
-        self.bloomed = False
+        self.bloomed: bool = False
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f" Color: {self.color}")
         if self.bloomed:
@@ -51,7 +51,7 @@ class Flower(Plant):
         else:
             print(f" {self.name} has not bloomed yet")
 
-    def bloom(self):
+    def bloom(self) -> None:
 
         print(f"[asking the {self.name} to bloom]")
         self.bloomed = True
@@ -59,15 +59,16 @@ class Flower(Plant):
 
 class Tree(Plant):
 
-    def __init__(self, name, height, days, diameter):
+    def __init__(self, name: str, height: float, days: int,
+                 diameter: float) -> None:
         super().__init__(name, height, days)
         self.diameter = diameter
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f" Trunk diameter: {self.diameter}cm")
 
-    def produce_shade(self):
+    def produce_shade(self) -> None:
         print(f"[asking the {self.name} to produce shade]")
         print(f"Tree {self.name} now produces a shade of "
               f"{self._height}cm long and {self.diameter}cm wide.")
@@ -75,26 +76,29 @@ class Tree(Plant):
 
 class Vegetable(Plant):
 
-    def __init__(self, name, height, days, harvest_season, nutritional_value):
+    def __init__(self, name: str, height: float, days: int,
+                 harvest_season: str, nutritional_value: int):
         super().__init__(name, height, days)
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f" Harvest season: {self.harvest_season}")
         print(f" Nutritional value: {self.nutritional_value}")
 
-    def make_tomato(self, time):
+    def age(self) -> None:
+        super().age()
+        self.nutritional_value += 1
+
+    def make_tomato(self, time: int, lenght: float) -> None:
         print(f"[make {self.name} grow and age for {time} days]")
-        self.nutritional_value += time
-        self._days += time
-
-    def grow(self, lenght):
-        super().grow(lenght)
+        for i in range(time):
+            self.age()
+            self.grow(lenght)
 
 
-def main():
+def main() -> None:
 
     plant1 = Flower("Rose", 15.0, 10, "red")
     plant2 = Tree("Oak", 200.0, 365, 5.0)
@@ -111,8 +115,7 @@ def main():
     print("")
     print("=== Vegetable")
     plant3.show()
-    plant3.make_tomato(20)
-    plant3.grow(42.0)
+    plant3.make_tomato(20, 2.1)
     plant3.show()
 
 
