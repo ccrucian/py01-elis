@@ -26,7 +26,7 @@ class Plant:
             print(f"Height updated: {self._height}cm")
 
     def get_age(self):
-        return self._age
+        return self._days
 
     def set_age(self, new_days):
         if new_days >= 0:

@@ -1,8 +1,8 @@
-def main():
+def main() -> None:
 
-    name = "Rose"
-    height = "10"
-    age = "1"
+    name: str = "Rose"
+    height: int = 10
+    age: int = 1
 
     print("=== Welcome to My Garden ===")
     print(f"Plant: {name}")
