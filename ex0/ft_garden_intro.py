@@ -12,5 +12,6 @@ def main() -> None:
     print("=== End of Program ===")
 
 
+main()
 if __name__ == "__main__":
     main()
